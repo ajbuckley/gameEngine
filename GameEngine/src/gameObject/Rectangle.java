@@ -3,70 +3,118 @@
  */
 package gameObject;
 
-import processing.core.PApplet;
-
-import java.util.Vector;
-
 /**
  * @author Drew
  *
  */
-public class Square implements GravityAffected {
-	private final static float TERMINAL_VELOCITY = 10;
+public class Rectangle implements GravityAffected {
 	private boolean visible;
 	private int x;
 	private int y;
 	private int width;
-	private int[] fill = { 100, 0, 100, 255 };
+	private int height;
+	private int[] fill = { 175, 0, 100, 255 };
 	private int[] stroke = { 0, 50, 100, 255 };
-	private float gravity;
 	private float[] velocity = null;
+	private float gravity;
 	private boolean inAir;
 	private VisibleObject ground;
+	private final static float TERMINAL_VELOCITY = 10;
 
 	/**
-	 * (non-Javadoc)
 	 * 
-	 * @see gameObject.Locatable#setLoc(java.util.Vector)
 	 */
-	public Square(int x, int y, int width) {
+	public Rectangle(int x, int y, int width, int height) {
 		this.x = x;
 		this.y = y;
 		this.width = width;
+		this.height = height;
 		this.visible = true;
-		this.inAir = true;
-
 	}
 
 	/**
-	 * @see gameObject.VisibleObject#isVisible()
-	 **/
-	@Override
-	public void setVisible(boolean visible) {
-
-		this.visible = visible;
-	}
-
-	/**
-	 * @see gameObject.VisibleObject#isVisible()
+	 * @see gameObject.VisibleObject#setLoc(int, int, int)
 	 */
-	public boolean isVisible() {
-		return visible;
+	@Override
+	public void setLoc(int x, int y, int z) {
+		this.x = x;
+		this.y = y;
+
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see gameObject.Locatable#getX()
+	 */
+	@Override
+	public int getX() {
+
+		return x;
+	}
+
+	/**
+	 * @see gameObject.VisibleObject#getY()
+	 */
+	@Override
+	public int getY() {
+
+		return y;
+	}
+
+	/**
+	 * @see gameObject.VisibleObject#getZ()
+	 */
+	@Override
+	public int getZ() {
+
+		return 0;
+	}
+
+	/**
+	 * @see gameObject.VisibleObject#drawType()
+	 */
+	@Override
+	public int drawType() {
+
+		return RECT_DRAW_VAL;
+	}
+
+	/**
+	 * @see gameObject.VisibleObject#update()
+	 */
+	@Override
+	public void update() {
+
+		if (velocity != null) {
+			if (this.inAir()) {
+				this.fall();
+			}
+			if (velocity[0] > TERMINAL_VELOCITY) {
+				velocity[0] = TERMINAL_VELOCITY;
+			}
+			this.x += velocity[0];
+			if (velocity[1] > TERMINAL_VELOCITY) {
+				velocity[1] = TERMINAL_VELOCITY;
+			}
+			this.y += velocity[1];
+		}
 
 	}
 
 	/**
 	 * @see gameObject.GravityAffected#fall()
 	 */
+	@Override
 	public void fall() {
-
 		velocity[1] += gravity / 60;
+
 	}
 
 	/**
 	 * @see gameObject.GravityAffected#inAir()
 	 */
-
+	@Override
 	public boolean inAir() {
 		if (!inAir && ground != null) {
 			switch (ground.drawType()) {
@@ -95,45 +143,9 @@ public class Square implements GravityAffected {
 	}
 
 	/**
-	 * @see gameObject.VisibleObject#drawType()
+	 * @see gameObject.GravityAffected#getLoc()
 	 */
-	public int drawType() {
-		return SQUARE_DRAW_VAL;
-	}
-
-	/**
-	 * @see gameObject.VisibleObject#setLoc()
-	 */
-	public void setLoc(int x, int y, int z) {
-		this.x = x;
-		this.y = y;
-	}
-
-	/**
-	 * @see gameObject.VisibleObject#getX()
-	 */
-	public int getX() {
-		return x;
-	}
-
-	/**
-	 * @see gameObject.VisibleObject#getY()
-	 */
-	public int getY() {
-
-		return y;
-	}
-
-	/**
-	 * @see gameObject.VisibleObject#getZ()
-	 */
-	public int getZ() {
-		return 0;
-	}
-
-	/**
-	 * @see gameObject.VisibleObject#getLoc()
-	 */
+	@Override
 	public int[] getLoc() {
 		int loc[] = new int[2];
 		loc[0] = x;
@@ -141,49 +153,52 @@ public class Square implements GravityAffected {
 		return loc;
 	}
 
-	public int getWidth() {
-		return width;
-	}
+	/**
+	 * (non-Javadoc)
+	 * 
+	 * @see gameObject.GravityAffected#setVisible(boolean)
+	 */
+	@Override
+	public void setVisible(boolean visible) {
+		this.visible = visible;
 
-	public int getHeight() {
-		return width;
 	}
 
 	/**
-	 * @see gameObject.VisibleObject#update()
+	 * @see gameObject.GravityAffected#isVisible()
 	 */
-	public void update() {
+	@Override
+	public boolean isVisible() {
 
-		if (velocity != null) {
-			if (this.inAir()) {
-				this.fall();
-			}
-			if (velocity[0] > TERMINAL_VELOCITY) {
-				velocity[0] = TERMINAL_VELOCITY;
-			}
-			if (velocity[0] < -TERMINAL_VELOCITY) {
-				velocity[0] = -TERMINAL_VELOCITY;
-			}
-			this.x += velocity[0];
-			if (velocity[1] > TERMINAL_VELOCITY) {
-				velocity[1] = TERMINAL_VELOCITY;
-			}
-			if (velocity[1] < -TERMINAL_VELOCITY) {
-				velocity[1] = -TERMINAL_VELOCITY;
-			}
-			this.y += velocity[1];
-		}
+		return visible;
 	}
 
-	@Override
+	/**
+	 * @see gameObject.GravityAffected#setGravity(float)
+	 */
 	public void setGravity(float grav) {
-		this.gravity = grav;
 
+		this.gravity = grav;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see gameObject.GravityAffected#getGravity()
+	 */
+	public float getGravity() {
+		// TODO Auto-generated method stub
+		return gravity;
 	}
 
 	@Override
-	public float getGravity() {
-		return gravity;
+	public int[] getStroke() {
+		return stroke;
+	}
+
+	@Override
+	public int[] getFill() {
+		return fill;
 	}
 
 	@Override
@@ -193,21 +208,21 @@ public class Square implements GravityAffected {
 
 	}
 
-	@Override
-	public int[] getStroke() {
+	public int getWidth() {
+		return width;
 
-		return stroke;
 	}
 
-	@Override
-	public int[] getFill() {
+	public int getHeight() {
 
-		return fill;
+		return height;
 	}
 
 	@Override
 	public void setVelocity(float[] vel) {
-		this.velocity = vel;
+		this.velocity[0] = vel[0];
+		this.velocity[1] = vel[1];
+		this.velocity[2] = vel[2];
 
 	}
 
@@ -233,6 +248,7 @@ public class Square implements GravityAffected {
 
 	private void handleCollisions(Square s) {
 		if (this.velocity != null || s.getVelocity() != null) {
+
 			if (this.x < s.getX() + s.getWidth()
 					&& this.x + this.getWidth() > s.getX()) {
 				/**
@@ -417,6 +433,7 @@ public class Square implements GravityAffected {
 				}
 			}
 		}
+
 	}
 
 	private void handleCollisions(Rectangle s) {
@@ -605,8 +622,8 @@ public class Square implements GravityAffected {
 					}
 				}
 			}
-		}
 
+		}
 	}
 
 	public void setGround(VisibleObject o) {

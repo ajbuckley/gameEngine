@@ -3,9 +3,9 @@ package gameObject;
 public class Player {
 
 	
-	VisibleObject control;
+	GameObject control;
 	
-	public Player(VisibleObject controlled) {
+	public Player(GameObject controlled) {
 		this.control = controlled;
 	}
 	

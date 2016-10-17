@@ -5,7 +5,7 @@ package system;
 
 import gameObject.Player;
 import gameObject.Rectangle;
-import gameObject.VisibleObject;
+import gameObject.GameObject;
 import gameObject.Square;
 
 import java.util.ArrayList;
@@ -17,7 +17,7 @@ import processing.core.PApplet;
  *
  */
 public class SquareHopper extends PApplet {
-	static ArrayList<VisibleObject> objects;
+	static ArrayList<GameObject> objects;
 	/** Default stroke(outline) = black **/
 	int strokeDef = 0;
 	/** Default fill = black **/
@@ -29,7 +29,7 @@ public class SquareHopper extends PApplet {
 	 */
 	public static void main(String[] args) {
 		PApplet.main("system.SquareHopper");
-		objects = new ArrayList<VisibleObject>();
+		objects = new ArrayList<GameObject>();
 
 		Square s = new Square(1, 1, 50);
 		s.setGravity((float) 9.8);
@@ -65,7 +65,7 @@ public class SquareHopper extends PApplet {
 		updateObjects();
 		background(0);
 		for (int i = 0; i < objects.size(); i++) {
-			VisibleObject x = objects.get(i);
+			GameObject x = objects.get(i);
 			if (x.isVisible()) {
 
 				int[] fill = x.getFill();
@@ -74,13 +74,13 @@ public class SquareHopper extends PApplet {
 				fill(fill[0], fill[1], fill[2], fill[3]);
 
 				switch (x.drawType()) {
-				case VisibleObject.SQUARE_DRAW_VAL:
+				case GameObject.SQUARE_DRAW_VAL:
 					drawSquare(x);
 					break;
-				case VisibleObject.RECT_DRAW_VAL:
+				case GameObject.RECT_DRAW_VAL:
 					drawRect(x);
 					break;
-				case VisibleObject.LINE_DRAW_VAL:
+				case GameObject.LINE_DRAW_VAL:
 					drawLine(x);
 					break;
 				default:
@@ -94,30 +94,30 @@ public class SquareHopper extends PApplet {
 
 	}
 
-	private void drawSquare(VisibleObject quad) {
+	private void drawSquare(GameObject quad) {
 
 		rect(quad.getX(), quad.getY(), ((Square) quad).getWidth(),
 				((Square) quad).getHeight());
 
 	}
 
-	private void drawRect(VisibleObject quad) {
+	private void drawRect(GameObject quad) {
 
 		rect(quad.getX(), quad.getY(), ((Rectangle) quad).getWidth(),
 				((Rectangle) quad).getHeight());
 	}
 
-	private void drawLine(VisibleObject line) {
+	private void drawLine(GameObject line) {
 
 	}
 
 	private void handleCollisions() {
 		for (int i = 0; i < objects.size() - 1; i++) {
 
-			VisibleObject o1 = objects.get(i);
+			GameObject o1 = objects.get(i);
 			// System.out.println(o1.drawType());
 			for (int j = i + 1; j < objects.size(); j++) {
-				VisibleObject o2 = objects.get(j);
+				GameObject o2 = objects.get(j);
 				o1.handleCollisions(o2);
 				// System.out.println(o2.drawType());
 			}

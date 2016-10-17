@@ -22,7 +22,7 @@ public class Square implements GravityAffected {
 	private float gravity;
 	private float[] velocity = null;
 	private boolean inAir;
-	private VisibleObject ground;
+	private GameObject ground;
 
 	/**
 	 * (non-Javadoc)
@@ -39,7 +39,7 @@ public class Square implements GravityAffected {
 	}
 
 	/**
-	 * @see gameObject.VisibleObject#isVisible()
+	 * @see gameObject.GameObject#isVisible()
 	 **/
 	@Override
 	public void setVisible(boolean visible) {
@@ -48,7 +48,7 @@ public class Square implements GravityAffected {
 	}
 
 	/**
-	 * @see gameObject.VisibleObject#isVisible()
+	 * @see gameObject.GameObject#isVisible()
 	 */
 	public boolean isVisible() {
 		return visible;
@@ -95,14 +95,14 @@ public class Square implements GravityAffected {
 	}
 
 	/**
-	 * @see gameObject.VisibleObject#drawType()
+	 * @see gameObject.GameObject#drawType()
 	 */
 	public int drawType() {
 		return SQUARE_DRAW_VAL;
 	}
 
 	/**
-	 * @see gameObject.VisibleObject#setLoc()
+	 * @see gameObject.GameObject#setLoc()
 	 */
 	public void setLoc(int x, int y, int z) {
 		this.x = x;
@@ -110,14 +110,14 @@ public class Square implements GravityAffected {
 	}
 
 	/**
-	 * @see gameObject.VisibleObject#getX()
+	 * @see gameObject.GameObject#getX()
 	 */
 	public int getX() {
 		return x;
 	}
 
 	/**
-	 * @see gameObject.VisibleObject#getY()
+	 * @see gameObject.GameObject#getY()
 	 */
 	public int getY() {
 
@@ -125,14 +125,14 @@ public class Square implements GravityAffected {
 	}
 
 	/**
-	 * @see gameObject.VisibleObject#getZ()
+	 * @see gameObject.GameObject#getZ()
 	 */
 	public int getZ() {
 		return 0;
 	}
 
 	/**
-	 * @see gameObject.VisibleObject#getLoc()
+	 * @see gameObject.GameObject#getLoc()
 	 */
 	public int[] getLoc() {
 		int loc[] = new int[2];
@@ -150,7 +150,7 @@ public class Square implements GravityAffected {
 	}
 
 	/**
-	 * @see gameObject.VisibleObject#update()
+	 * @see gameObject.GameObject#update()
 	 */
 	public void update() {
 
@@ -216,7 +216,7 @@ public class Square implements GravityAffected {
 		return velocity;
 	}
 
-	public void handleCollisions(VisibleObject o) {
+	public void handleCollisions(GameObject o) {
 
 		switch (o.drawType()) {
 		case RECT_DRAW_VAL:
@@ -609,7 +609,7 @@ public class Square implements GravityAffected {
 
 	}
 
-	public void setGround(VisibleObject o) {
+	public void setGround(GameObject o) {
 		this.ground = o;
 
 	}

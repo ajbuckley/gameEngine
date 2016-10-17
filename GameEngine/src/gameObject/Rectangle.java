@@ -18,7 +18,7 @@ public class Rectangle implements GravityAffected {
 	private float[] velocity = null;
 	private float gravity;
 	private boolean inAir;
-	private VisibleObject ground;
+	private GameObject ground;
 	private final static float TERMINAL_VELOCITY = 10;
 
 	/**
@@ -33,7 +33,7 @@ public class Rectangle implements GravityAffected {
 	}
 
 	/**
-	 * @see gameObject.VisibleObject#setLoc(int, int, int)
+	 * @see gameObject.GameObject#setLoc(int, int, int)
 	 */
 	@Override
 	public void setLoc(int x, int y, int z) {
@@ -54,7 +54,7 @@ public class Rectangle implements GravityAffected {
 	}
 
 	/**
-	 * @see gameObject.VisibleObject#getY()
+	 * @see gameObject.GameObject#getY()
 	 */
 	@Override
 	public int getY() {
@@ -63,7 +63,7 @@ public class Rectangle implements GravityAffected {
 	}
 
 	/**
-	 * @see gameObject.VisibleObject#getZ()
+	 * @see gameObject.GameObject#getZ()
 	 */
 	@Override
 	public int getZ() {
@@ -72,7 +72,7 @@ public class Rectangle implements GravityAffected {
 	}
 
 	/**
-	 * @see gameObject.VisibleObject#drawType()
+	 * @see gameObject.GameObject#drawType()
 	 */
 	@Override
 	public int drawType() {
@@ -81,7 +81,7 @@ public class Rectangle implements GravityAffected {
 	}
 
 	/**
-	 * @see gameObject.VisibleObject#update()
+	 * @see gameObject.GameObject#update()
 	 */
 	@Override
 	public void update() {
@@ -231,7 +231,7 @@ public class Rectangle implements GravityAffected {
 		return velocity;
 	}
 
-	public void handleCollisions(VisibleObject o) {
+	public void handleCollisions(GameObject o) {
 
 		switch (o.drawType()) {
 		case RECT_DRAW_VAL:
@@ -626,7 +626,7 @@ public class Rectangle implements GravityAffected {
 		}
 	}
 
-	public void setGround(VisibleObject o) {
+	public void setGround(GameObject o) {
 		this.ground = o;
 
 	}

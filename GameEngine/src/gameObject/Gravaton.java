@@ -3,13 +3,15 @@
  */
 package gameObject;
 
+import java.io.Serializable;
+
 /**
  * @author Drew
  * 
  * Class for providing gravity. Follows singleton pattern.
  * If Objects want different gravity they can define their own field.
  */
-public class Gravaton {
+public class Gravaton implements Serializable {
 	/** Default gravity if not set**/
 	public static final double DEFAULT_GRAVITY = 9.8;
 	/** The gravity instance**/

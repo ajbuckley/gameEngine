@@ -3,11 +3,27 @@
  */
 package gameObject;
 
+import java.io.Serializable;
+import java.util.Scanner;
+
+import event.Event;
+import event.EventHandler;
+import event.EventListener;
+
 /**
  * @author Drew
  *
  */
-public class CollisionVolume {
+public class CollisionVolume implements Serializable, EventListener{
+	
+	private String ID;
+
+	//If collided with an object
+	private Boolean collided;
+	
+	private Location collisionPoint;
+	
+	private CollisionVolume other;
 	
 	//Location of the volume
 	private Location loc;
@@ -23,7 +39,7 @@ public class CollisionVolume {
 	private double yRotation;
 	
 	
-	public CollisionVolume(Location loc, double width, double height, double depth){
+	public CollisionVolume(Location loc, double width, double height, double depth, String ID){
 		this.setDepth(depth);
 		this.setHeight(height);
 		this.setWidth(width);
@@ -31,6 +47,10 @@ public class CollisionVolume {
 		this.setxRotation(0);
 		this.setyRotation(0);
 		this.setzRotation(0);
+		EventHandler en = EventHandler.getInstance();
+		en.registerForCollision(this);
+		this.setID("CV" + ID);
+		collided = false;
 	}
 	
 	/**
@@ -117,6 +137,80 @@ public class CollisionVolume {
 	public void setyRotation(double yRotation) {
 		this.yRotation = yRotation;
 	}
+
+	/**
+	 * @return the collisionPoint
+	 */
+	public Location getCollisionPoint() {
+		return collisionPoint;
+	}
+
+	/**
+	 * @param collisionPoint the collisionPoint to set
+	 */
+	public void setCollisionPoint(Location collisionPoint) {
+		this.collisionPoint = collisionPoint;
+	}
+
+	/**
+	 * @return the collided
+	 */
+	public Boolean getCollided() {
+		return collided;
+	}
+
+	/**
+	 * @param collided the collided to set
+	 */
+	public void setCollided(Boolean collided) {
+		this.collided = collided;
+	}
+
+	/**
+	 * @return the other
+	 */
+	public CollisionVolume getOther() {
+		return other;
+	}
+
+	/**
+	 * @param other the other to set
+	 */
+	public void setOther(CollisionVolume other) {
+		this.other = other;
+	}
+
+
+	@Override
+	public void notify(Event e) {
+		Scanner scan = new Scanner(e.getMessage());
+		String iD1 = scan.next();
+		String iD2 = scan.next();
+		if(iD1.equals(this.ID) || iD2.equals(this.ID)){
+			this.setCollided(true);
+			System.out.println(this.ID);
+			double xLoc = Double.parseDouble(scan.next());
+			double yLoc = Double.parseDouble(scan.next());
+			double zLoc = Double.parseDouble(scan.next());
+			this.setCollisionPoint(new Location(xLoc, yLoc, zLoc));
+		}
+		
+	}
+
+	/**
+	 * @return the iD
+	 */
+	public String getID() {
+		return ID;
+	}
+
+	/**
+	 * @param iD the iD to set
+	 */
+	public void setID(String iD) {
+		ID = iD;
+	}
+
 	
 	
 	

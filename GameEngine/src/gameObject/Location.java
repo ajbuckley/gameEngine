@@ -3,11 +3,13 @@
  */
 package gameObject;
 
+import java.io.Serializable;
+
 /**
  * @author Drew
  *
  */
-public class Location {
+public class Location implements Serializable{
 	
 	private double x;
 	private double y;
@@ -110,5 +112,9 @@ public class Location {
 		this.setX(x);
 		this.setY(y);
 		this.setZ(z);
+	}
+
+	public boolean equalsVals(Location start) {
+		return (this.x == start.getX() && this.y == start.getY() && this.z == start.getZ());
 	}
 }

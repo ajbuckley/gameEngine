@@ -1,11 +1,16 @@
 package gameObject;
 
+import java.io.Serializable;
 
 
-public abstract class GameObject {
+
+public abstract class GameObject implements Serializable {
 
 	private String name;
 	
+	public GameObject(){
+		name = "";
+	}
 	public GameObject(String name){
 		this.name = name;
 	}
@@ -29,6 +34,7 @@ public abstract class GameObject {
 	public String getName(){
 		return this.name;
 	}
+
 
 	
 }

@@ -1,16 +1,12 @@
 package gameObject;
 
-public class Player {
-
-	
-	GameObject control;
-	
-	public Player(GameObject controlled) {
-		this.control = controlled;
-	}
-	
-	
-	
-	
-	
+/**
+ * Interface for creating a player.
+ * 
+ * @author Drew
+ *
+ */
+public interface Player {
+	public void handleKeys(char key);
+	public void updateControlledObjects();
 }
